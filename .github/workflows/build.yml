@@ -1,13 +1,30 @@
-name: Build and push pages
+name: pages sync and build
 
 on: push
 
 jobs:
-  build:
-    name: Build and push pages
+  sync:
+    name: sync and build
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Run build script
-        run: node scripts/build.js
+        with:
+          ref: gh-pages
+      - name: Squash sync
+        run: |
+          git merge --squash main
+          git restore --staged *
+          git add *
+          git commit
+      - name: Build pages
+        run: |
+          npm ci
+          npm start
+        working-directory: ./src/packages/build
+      - name: Commit pages
+        run: |
+          git add *
+          git commit -m "Build pages"
+      - name: Push
+        run: git push
