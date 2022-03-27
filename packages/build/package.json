@@ -1,0 +1,14 @@
+{
+  "name": "build",
+  "version": "0.0.0",
+  "description": "Build pages",
+  "author": "Jonas Musall",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node build.js"
+  },
+  "dependencies": {
+    "jsdom": "^19.0.0"
+  }
+}
