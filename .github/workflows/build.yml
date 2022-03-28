@@ -13,10 +13,13 @@ jobs:
           ref: gh-pages
           fetch-depth: 0
       - name: Squash sync
+        run: git merge --squash origin/main
+        continue-on-error: true
+      - name: Commit synced changes
         run: |
-          git merge --squash main
-          git restore --staged *
-          git add *
+          git add .
+          git restore --staged .
+          git add .
           git commit
       - name: Build pages
         run: |
@@ -25,7 +28,7 @@ jobs:
         working-directory: ./src/packages/build
       - name: Commit pages
         run: |
-          git add *
+          git add .
           git commit -m "Build pages"
       - name: Push
         run: git push
