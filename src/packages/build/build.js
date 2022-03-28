@@ -1,15 +1,14 @@
 const fs = require('fs/promises');
 const { JSDOM } = require('jsdom');
+const { marked } = require('marked');
 
 build();
 
 async function build() {
     const dom = await getTemplate();
     const { document } = dom.window;
-    const content = await fs.readFile('../../pages/index.md', 'utf8');
-    const contentElement = document.createElement('div');
-    contentElement.textContent = content;
-    document.body.appendChild(contentElement);
+    const md = await fs.readFile('../../pages/index.md', 'utf8');
+    dom.window.document.body.innerHTML = marked.parse(md);
     await fs.writeFile('../../../index.html', dom.serialize(), 'utf8');
 }
 
