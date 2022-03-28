@@ -10,7 +10,7 @@ async function build() {
     const contentElement = document.createElement('div');
     contentElement.textContent = content;
     document.body.appendChild(contentElement);
-    await fs.writeFile('../../index.html', dom.serialize(), 'utf8');
+    await fs.writeFile('../../../index.html', dom.serialize(), 'utf8');
 }
 
 /**
