@@ -1,40 +1,34 @@
-name: pages sync and build
+name: pages build and push
 
 on: push
 
 jobs:
   sync:
-    name: sync and build
+    name: build and push
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
+        uses: actions/checkout@v3
+      - name: Checkout gh-pages
         uses: actions/checkout@v3
         with:
           ref: gh-pages
-          fetch-depth: 0
-      - name: Setup identity
+          path: out
+      - name: Setup git identity
         run: |
           git config --global user.email "69427105+jonasmusall@users.noreply.github.com"
-          git config --global user.name "pages sync and build"
-      - name: Squash sync
-        run: git merge --squash origin/main
-        continue-on-error: true
-      - name: Commit synced changes
-        run: |
-          git add .
-          git restore --staged .
-          git add .
-          git commit
-        continue-on-error: true
+          git config --global user.name "jonasmusall"
+      - name: Empty output directory
+        run: git rm -rf .
+        working-directory: ./out
       - name: Build pages
         run: |
           npm ci
           npm start
-        working-directory: ./src/packages/build
-      - name: Commit pages
+        working-directory: ./packages/build
+      - name: Commit and push build
         run: |
           git add .
           git commit -m "Build pages"
-        continue-on-error: true
-      - name: Push
-        run: git push
+          git push
+        working-directory: ./out
