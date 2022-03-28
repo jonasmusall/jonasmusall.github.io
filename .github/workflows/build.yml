@@ -14,7 +14,7 @@ jobs:
       - name: Squash sync
         run: |
           git fetch --depth=1 origin main
-          git merge --squash main
+          git merge --squash origin/main
           git restore --staged *
           git add *
           git commit
