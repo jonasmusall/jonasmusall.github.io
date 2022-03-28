@@ -12,6 +12,10 @@ jobs:
         with:
           ref: gh-pages
           fetch-depth: 0
+      - name: Setup identity
+        run: |
+          git config --global user.email "69427105+jonasmusall@users.noreply.github.com"
+          git config --global user.name "pages sync and build"
       - name: Squash sync
         run: git merge --squash origin/main
         continue-on-error: true
