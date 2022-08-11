@@ -32,6 +32,7 @@ jobs:
       - name: Build
         run: |
           npm ci
+          npm run build
           npm start
         working-directory: ./packages/build
       - name: Upload artifact
