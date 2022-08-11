@@ -4,7 +4,7 @@ const { JSDOM } = require('jsdom');
 const { marked } = require('marked');
 
 const SRC_ROOT = path.resolve(__dirname, '../../src');
-const OUT_ROOT = path.resolve(__dirname, '../../out');
+const OUT_ROOT = path.resolve(__dirname, '../../_site');
 
 build();
 
